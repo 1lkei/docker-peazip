@@ -14,7 +14,10 @@ FROM jlesage/baseimage-gui:ubuntu-20.04-v4
 COPY startapp.sh /startapp.sh
 COPY --from=builder /app/peazip_GTK2.deb /tmp/
 
-ENV APP_NAME="PeaZip"
+ENV APP_NAME="PeaZip" \
+    TZ=Asia/Shanghai \
+    LANG=zh_CN.UTF-8 \
+    LC_ALL=zh_CN.UTF-8
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
