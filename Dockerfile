@@ -20,7 +20,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
                                                 xfce4 \
                                                 p7zip \
-                                                fonts-noto-cjk \
+                                                fonts-wqy-zenhei \
                                             && \
     dpkg -i /tmp/peazip_GTK2.deb && \
     rm /tmp/peazip_GTK2.deb && \
