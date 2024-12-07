@@ -14,9 +14,7 @@ FROM jlesage/baseimage-gui:ubuntu-20.04-v4
 COPY startapp.sh /startapp.sh
 COPY --from=builder /app/peazip_GTK2.deb /tmp/
 
-ENV APP_NAME="PeaZip" \
-    DISPLAY_WIDTH="1280" \
-    DISPLAY_HEIGHT="1024"
+ENV APP_NAME="PeaZip"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
