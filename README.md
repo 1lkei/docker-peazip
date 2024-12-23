@@ -41,8 +41,9 @@ https端口(默认值)
 `-e START_DOCKER=false`
 
 添加以下环境变量启用cn等语言支持  
-`-e DOCKER_MODS=linuxserver/mods:universal-package-install `  
+`-e DOCKER_MODS=linuxserver/mods:universal-package-install`  
 `-e INSTALL_PACKAGES=fonts-noto-cjk`
+
 添加以下环境变量启用硬件加速  
 `--device /dev/dri:/dev/dri`  
 `-e DRINODE=/dev/dri/renderD128`
