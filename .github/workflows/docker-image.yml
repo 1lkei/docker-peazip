@@ -1,0 +1,69 @@
+name: Docker images build and push
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'actions-time.txt'
+  # schedule:
+    # - cron: "0 0 12 * *"   # 每天12点
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Get latest release version
+        run: | 
+          latest_version=$(curl -s https://api.github.com/repos/peazip/PeaZip/releases/latest | jq -r .tag_name)
+          echo "latest_version=$latest_version" >> $GITHUB_ENV
+
+      - name: Check local version
+        run: |
+          if [ -f ./peazip_version ]; then
+            local_version=$(cat ./peazip_version)
+          else
+            local_version="none"
+          fi
+          echo "local_version=$local_version" >> $GITHUB_ENV
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3.2.0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3.7.1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3.3.0
+        with:
+          username: 1lkei
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker build-push
+        uses: docker/build-push-action@v6.9.0
+        with:
+          context: .
+          file: Dockerfile
+          push: true # push to docker hub
+          tags: |
+            1lkei/peazip:latest
+            1lkei/peazip:${{ env.latest_version }}
+          build-args: |
+            VERSION=${{ env.latest_version }}
+          platforms: linux/amd64 #,linux/arm64
+
+      - name: Commit updated version
+        if: env.local_version != env.latest_version
+        run: |
+          echo "$latest_version" > peazip_version
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add peazip_version
+          git commit -m "Update version to $latest_version"
+          git remote set-url origin https://1lkei:${{ secrets.REPO_BOT }}@github.com/1lkei/docker-peazip.git
+          git push
