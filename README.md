@@ -40,11 +40,11 @@ https端口(默认值)
 禁用docker in docker
 `-e START_DOCKER=false`
 
-添加以下环境变量启用cn等语言支持
-`-e DOCKER_MODS=linuxserver/mods:universal-package-install `
+添加以下环境变量启用cn等语言支持  
+`-e DOCKER_MODS=linuxserver/mods:universal-package-install `  
 `-e INSTALL_PACKAGES=fonts-noto-cjk`
-添加以下环境变量启用硬件加速
-`--device /dev/dri:/dev/dri`
+添加以下环境变量启用硬件加速  
+`--device /dev/dri:/dev/dri`  
 `-e DRINODE=/dev/dri/renderD128`
 
 更多选项请前往<https://github.com/linuxserver/docker-baseimage-kasmvnc?tab=readme-ov-file#options>了解
