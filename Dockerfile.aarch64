@@ -1,0 +1,32 @@
+FROM alpine:3.18 AS builder
+
+ARG VERSION
+
+RUN apk update && \
+    apk add --no-cache --virtual .build-deps ca-certificates curl tar && \
+    mkdir /app && \
+    cd /app && \
+    curl -L -o peazip_GTK2.tar.gz https://github.com/peazip/PeaZip/releases/download/$VERSION/peazip_portable-$VERSION.LINUX.GTK2.aarch64.tar.gz && \
+    tar -xvf peazip_GTK2.tar.gz && \
+    rm peazip_GTK2.tar.gz && \
+    mv * peazip && \
+    apk del .build-deps && \
+    rm -rf /var/cache/apk/*
+
+
+FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
+
+COPY --from=builder --chown=1000:1000 /app/peazip/ /opt/peazip/
+
+RUN apt-get update && \
+    apt-get install -y p7zip libgtk2.0-0 && \
+    apt-get autoclean && \
+    rm -r /opt/peazip/res/conf /opt/peazip/res/portable && \
+    ln -s /opt/peazip/peazip /usr/bin/peazip && \
+    rm -r /defaults/autostart && \
+    echo "peazip" >> /defaults/autostart && \
+    rm -rf \
+    /config/.cache \
+    /var/lib/apt/lists/* \
+    /var/tmp/* \
+    /tmp/*

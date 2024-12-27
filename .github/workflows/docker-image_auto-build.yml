@@ -2,7 +2,7 @@ name: Docker images auto build and push
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # 每天12点
+    - cron: "0 0 * * *"
 
 jobs:
   build:
@@ -48,14 +48,28 @@ jobs:
         uses: docker/build-push-action@v6.9.0
         with:
           context: .
-          file: Dockerfile
-          push: true # push to docker hub
+          file: Dockerfile.amd64
+          push: true
           tags: |
             1lkei/peazip:latest
             1lkei/peazip:${{ env.latest_version }}
           build-args: |
             VERSION=${{ env.latest_version }}
-          platforms: linux/amd64 #,linux/arm64
+          platforms: linux/amd64
+
+      - name: Docker build-push arm64
+        if: env.local_version != env.latest_version
+        uses: docker/build-push-action@v6.9.0
+        with:
+          context: .
+          file: Dockerfile.aarch64
+          push: true
+          tags: |
+            1lkei/peazip:latest
+            1lkei/peazip:${{ env.latest_version }}
+          build-args: |
+            VERSION=${{ env.latest_version }}
+          platforms: linux/arm64
 
       - name: Commit updated version
         if: env.local_version != env.latest_version
