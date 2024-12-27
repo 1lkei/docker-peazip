@@ -50,7 +50,8 @@ jobs:
           context: .
           file: Dockerfile.amd64
           push: false
-          load: true
+          # load: true
+          provenance: false
           tags: |
             1lkei/peazip:latest-amd64
             1lkei/peazip:${{ env.latest_version }}-amd64
@@ -65,7 +66,8 @@ jobs:
           context: .
           file: Dockerfile.aarch64
           push: false
-          load: true
+          # load: true
+          provenance: false
           tags: |
             1lkei/peazip:latest-arm64
             1lkei/peazip:${{ env.latest_version }}-arm64
@@ -81,7 +83,7 @@ jobs:
             images: 1lkei/peazip:latest-amd64,1lkei/peazip:latest-arm64
             push: true
 
-      - name: Create and push manifest images ${{ env.latest_version }}
+      - name: Create and push manifest images version
         if: env.local_version != env.latest_version
         uses: Noelware/docker-manifest-action@0.4.2
         with:
