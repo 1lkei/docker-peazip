@@ -1,6 +1,7 @@
 FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
 
 ARG VERSION
+ENV TITLE=PeaZip
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends p7zip libgtk2.0-0 && \
