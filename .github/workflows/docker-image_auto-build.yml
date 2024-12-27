@@ -43,33 +43,49 @@ jobs:
           username: 1lkei
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Docker build-push
+      - name: Docker build amd64
         if: env.local_version != env.latest_version
         uses: docker/build-push-action@v6.9.0
         with:
           context: .
           file: Dockerfile.amd64
-          push: true
+          push: false
           tags: |
-            1lkei/peazip:latest
-            1lkei/peazip:${{ env.latest_version }}
+            1lkei/peazip:latest-amd64
+            1lkei/peazip:${{ env.latest_version }}-amd64
           build-args: |
             VERSION=${{ env.latest_version }}
           platforms: linux/amd64
 
-      - name: Docker build-push arm64
+      - name: Docker build arm64
         if: env.local_version != env.latest_version
         uses: docker/build-push-action@v6.9.0
         with:
           context: .
           file: Dockerfile.aarch64
-          push: true
+          push: false
           tags: |
-            1lkei/peazip:latest
-            1lkei/peazip:${{ env.latest_version }}
+            1lkei/peazip:latest-arm64
+            1lkei/peazip:${{ env.latest_version }}-arm64
           build-args: |
             VERSION=${{ env.latest_version }}
           platforms: linux/arm64
+
+      - name: Create and push manifest images latest
+        if: env.local_version != env.latest_version
+        uses: Noelware/docker-manifest-action@0.4.2
+        with:
+            inputs: 1lkei/peazip:latest
+            images: 1lkei/peazip:latest-amd64,1lkei/peazip:latest-arm64
+            push: true
+
+      - name: Create and push manifest images ${{ env.latest_version }}
+        if: env.local_version != env.latest_version
+        uses: Noelware/docker-manifest-action@0.4.2
+        with:
+            inputs: 1lkei/peazip:${{ env.latest_version }}
+            images: 1lkei/peazip:${{ env.latest_version }}-amd64,1lkei/peazip:${{ env.latest_version }}-arm64
+            push: true
 
       - name: Commit updated version
         if: env.local_version != env.latest_version
