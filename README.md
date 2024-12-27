@@ -34,7 +34,7 @@ https端口(默认值)
 `-e PASSWORD=pw`  
 **请及时修改账号密码！**
 
-禁用docker in docker
+禁用docker in docker  
 `-e START_DOCKER=false`
 
 添加以下环境变量启用cn等语言支持  
