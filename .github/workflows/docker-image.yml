@@ -51,8 +51,8 @@ jobs:
           # load: true
           provenance: false
           tags: |
-            1lkei/peazip:latest-amd64
             1lkei/peazip:${{ env.latest_version }}-amd64
+            1lkei/peazip:latest-amd64
           build-args: |
             VERSION=${{ env.latest_version }}
           platforms: linux/amd64
@@ -66,24 +66,24 @@ jobs:
           # load: true
           provenance: false
           tags: |
-            1lkei/peazip:latest-arm64
             1lkei/peazip:${{ env.latest_version }}-arm64
+            1lkei/peazip:latest-arm64
           build-args: |
             VERSION=${{ env.latest_version }}
           platforms: linux/arm64
-
-      - name: Create and push manifest images latest
-        uses: Noelware/docker-manifest-action@0.4.2
-        with:
-            inputs: 1lkei/peazip:latest
-            images: 1lkei/peazip:latest-amd64,1lkei/peazip:latest-arm64
-            push: true
 
       - name: Create and push manifest images version
         uses: Noelware/docker-manifest-action@0.4.2
         with:
             inputs: 1lkei/peazip:${{ env.latest_version }}
             images: 1lkei/peazip:${{ env.latest_version }}-amd64,1lkei/peazip:${{ env.latest_version }}-arm64
+            push: true
+
+      - name: Create and push manifest images latest
+        uses: Noelware/docker-manifest-action@0.4.2
+        with:
+            inputs: 1lkei/peazip:latest
+            images: 1lkei/peazip:latest-amd64,1lkei/peazip:latest-arm64
             push: true
 
       - name: Commit updated version
