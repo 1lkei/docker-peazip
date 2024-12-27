@@ -10,7 +10,6 @@
 docker run -d \
     --name=peazip \
     --restart=unless-stopped \
-    --security-opt seccomp=unconfined \
     --net=host \
     -v /config:/config \
     -e PUID=1000 \
@@ -24,15 +23,15 @@ docker run -d \
     -e LC_ALL=zh_CN.UTF-8 \
     1lkei/peazip:latest
 ```
-http端口(默认值)
-`-e CUSTOM_PORT=3000`
-https端口(默认值)
+http端口(默认值)  
+`-e CUSTOM_PORT=3000`  
+https端口(默认值)  
 `-e CUSTOM_HTTPS_PORT=3001`
 
-登陆账号
-`-e CUSTOM_USER=user`
-登陆密码
-`-e PASSWORD=pw`
+登陆账号  
+`-e CUSTOM_USER=user`  
+登陆密码  
+`-e PASSWORD=pw`  
 **请及时修改账号密码！**
 
 禁用docker in docker
