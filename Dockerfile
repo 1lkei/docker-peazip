@@ -13,7 +13,7 @@ RUN apk update && \
 
 FROM ghcr.io/linuxserver/baseimage-kasmvnc:debianbookworm
 
-COPY --from=builder --chown=1000:1000 /app/peazip_GTK2.deb /tmp/
+COPY --from=builder /app/peazip_GTK2.deb /tmp/
 
 RUN apt-get update && \
     apt-get install -y p7zip libgtk2.0-0 && \
