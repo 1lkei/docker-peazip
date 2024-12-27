@@ -12,8 +12,6 @@ docker run -d \
     --restart=unless-stopped \
     --security-opt seccomp=unconfined \
     --net=host \
-    --shm-size="1gb" \
-    -m 2g \
     -v /config:/config \
     -e PUID=1000 \
     -e PGID=1000 \
