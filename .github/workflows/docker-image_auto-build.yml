@@ -49,8 +49,8 @@ jobs:
         with:
           context: .
           file: Dockerfile.amd64
-          push: true
-          # load: true
+          push: false
+          load: true
           provenance: false
           tags: |
             1lkei/peazip:latest-amd64
@@ -65,8 +65,8 @@ jobs:
         with:
           context: .
           file: Dockerfile.aarch64
-          push: true
-          # load: true
+          push: false
+          load: true
           provenance: false
           tags: |
             1lkei/peazip:latest-arm64
