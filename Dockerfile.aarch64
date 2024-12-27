@@ -20,11 +20,10 @@ COPY --from=builder --chown=1000:1000 /app/peazip/ /opt/peazip/
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends p7zip libgtk2.0-0 && \
-    apt-get autoclean && \
     rm -r /opt/peazip/res/conf /opt/peazip/res/portable && \
     ln -s /opt/peazip/peazip /usr/bin/peazip && \
-    rm -r /defaults/autostart && \
-    echo "peazip" >> /defaults/autostart && \
+    echo "peazip" > /defaults/autostart && \
+    apt-get autoclean && \
     rm -rf \
     /config/.cache \
     /var/lib/apt/lists/* \
