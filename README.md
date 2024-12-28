@@ -10,7 +10,8 @@
 docker run -d \
     --name=peazip \
     --restart=unless-stopped \
-    --net=host \
+    -p 3000:3000 \
+    -p 3001:3001 \
     -v /config:/config \
     -e PUID=1000 \
     -e PGID=1000 \
