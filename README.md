@@ -35,8 +35,8 @@ https端口(默认值)
 `-e PASSWORD=pw`  
 **请及时修改账号密码！**
 
-禁用docker in docker  
-`-e START_DOCKER=false`
+若遇到无法启动gui等兼容问题，可尝试添加以下选项  
+`--security-opt seccomp=unconfined`
 
 添加以下环境变量启用cn等语言支持  
 `-e DOCKER_MODS=linuxserver/mods:universal-package-install`  
@@ -45,5 +45,8 @@ https端口(默认值)
 添加以下环境变量启用硬件加速  
 `--device /dev/dri:/dev/dri`  
 `-e DRINODE=/dev/dri/renderD128`
+
+禁用docker in docker  
+`-e START_DOCKER=false`
 
 更多选项请前往<https://github.com/linuxserver/docker-baseimage-kasmvnc?tab=readme-ov-file#options>了解

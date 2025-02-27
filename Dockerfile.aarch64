@@ -8,9 +8,9 @@ RUN apt-get update && \
     cd /tmp && \
     curl -L -o peazip_GTK2.tar.gz https://github.com/peazip/PeaZip/releases/download/$VERSION/peazip_portable-$VERSION.LINUX.GTK2.aarch64.tar.gz && \
     tar -xf peazip_GTK2.tar.gz && \
-    rm peazip_GTK2.tar.gz && \
+    rm -rf peazip_GTK2.tar.gz && \
     mv peazip* /opt/peazip/ && \
-    rm -r /opt/peazip/res/conf /opt/peazip/res/portable && \
+    rm -rf /opt/peazip/res/conf /opt/peazip/res/portable && \
     ln -s /opt/peazip/peazip /usr/bin/peazip && \
     echo "peazip" > /defaults/autostart && \
     apt-get autoclean && \
