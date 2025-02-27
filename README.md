@@ -10,6 +10,7 @@
 docker run -d \
     --name=peazip \
     --restart=unless-stopped \
+    --security-opt seccomp=unconfined \ # optional
     -p 3000:3000 \
     -p 3001:3001 \
     -v /config:/config \
